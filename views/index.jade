@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p Mensaje
+  	input#msg(type="text")
+  	button#btnEnviar Enviar
+  p 
+  	h3 Chat
+  	ul#mensajes
+  script
+       $(document).ready(function(){
+         alert("gola");
+
+         var socket = io.connect('http://localhost:4200');
+		    socket.on('connect', function(data) {
+		    	var client = {
+		    		user_id: 1
+		    	}
+		        socket.emit('storeClientInfo', client);
+		    });
+
+		    socket.on('consumeMessage', function(data) {
+		    	var item = $("<li>" + data + "</li>");
+		    	$("#mensajes").prepend(item);
+		    });
+			
+			$("#btnEnviar").click(function(){
+				var message = new Object();
+				message.text = $("#msg").text();
+				message.type = "text";
+				message.status = 1;
+				message.date = new Date();
+				message.from = 1;
+				message.to = 2;
+				socket.emit('publishMessage', message );
+			});
+		    
+       });

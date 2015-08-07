@@ -1,0 +1,19 @@
+<div class="col-md-12" ng-controller="myProductAppCtrl as vm">
+    <div class="page-header">
+        <h1>Products List</h1>
+    </div>
+
+    <a ng-click="open()" class="btn btn-primary" href="#/product/new"> New Product </a>
+    <br><br>
+
+    <div class="list-group">
+      <button type="button" class="list-group-item" ng-repeat="product in vm.products" 
+      ng-click="vm.showProduct(product._id)">
+        <div class="role" >
+            <div class="col-md-8"><h4>{{ product.name }}</h4></div>
+            <div class="col-md-4"><strong>{{ product.price | currency:"USD$" }}</strong></div>
+        </div>
+        <div class="col-md-12">{{ product.description }}</div>
+      </button>
+    </div>
+</div>
